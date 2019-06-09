@@ -10,12 +10,11 @@
 % Last modified: 19 March 2019
 %*****************************
 
-radix_sort  
-		: THEORY
+radix_sort: THEORY
 
-  BEGIN
+BEGIN
 
-IMPORTING sorting, ints@mod_lems
+IMPORTING sorting, mod_lems
 
 % d_nth computes the dth digit in the decimal representation of n
   d_nth(n, d : nat) : RECURSIVE below[10] =
@@ -71,10 +70,10 @@ IMPORTING sorting, ints@mod_lems
 % Merges lists of naturals non decreasingly by the dth digit in their
 % decimal representation
 merge(l1, l2 : list[nat], d : nat) : RECURSIVE list[nat] =
-IF null?(l1) OR null?(l2) THEN append(l1, l2)
-ELSIF d_nth(car(l1),d) <= d_nth(car(l2),d) THEN cons(car(l1), merge(cdr(l1),l2, d))
-ELSE cons(car(l2), merge(l1, cdr(l2), d))
-ENDIF
+	  IF null?(l1) OR null?(l2) THEN append(l1, l2)
+	  ELSIF d_nth(car(l1),d) <= d_nth(car(l2),d) THEN cons(car(l1), merge(cdr(l1),l2, d))
+	  ELSE cons(car(l2), merge(l1, cdr(l2), d))
+     ENDIF
 MEASURE length(l1) + length(l2)
 
 % Merge sort algorithm by the dth digit
@@ -206,4 +205,5 @@ radixsort_works  : THEOREM
   FORALL(l : list[nat]):
     permutations(l,radixsort(l)) AND is_sorted?(radixsort(l))
     
+
 END radix_sort
